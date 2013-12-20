@@ -21,23 +21,23 @@ pluto_SOURCES = constraints.c constraints_polylib.c constraints_isl.c math_suppo
 pluto_CPPFLAGS = -O3 -funroll-loops -fopenmp \
    -DSCOPLIB_INT_T_IS_LONGLONG -DCLOOG_INT_GMP \
    -I../include \
-   -I../piplib/include \
-   -I../clan/include \
+   $(PIPLIB_INCLUDE) \
+   $(CLAN_INCLUDE) \
    $(ISL_INCLUDE) \
-   -I../cloog-isl/include \
-   -I../openscop/include \
-   -I../candl/include \
-   -I../polylib/include
+   $(CLOOGISL_INCLUDE) \
+   $(OSL_INCLUDE) \
+   $(CANDL_INCLUDE) \
+   $(POLYLIB_INCLUDE)
 
 pluto_LDFLAGS = -static -fopenmp
 pluto_LDADD =  \
-   ../piplib/libpiplib64.la \
-   ../openscop/libosl.la \
-   ../clan/libclan.la \
-   ../cloog-isl/libcloog-isl.la \
+   $(PIPLIB_LIBADD) \
+   $(OSL_LIBADD) \
+   $(CLAN_LIBADD) \
+   $(CLOOGISL_LIBADD) \
    $(ISL_LIBADD) \
-   ../polylib/libpolylib64.la \
-   ../candl/libcandl.la \
+   $(POLYLIB_LIBADD) \
+   $(CANDL_LIBADD) \
    -lm
 
 lib_LTLIBRARIES = libpluto.la
@@ -47,18 +47,18 @@ libpluto_la_SOURCES = constraints.c constraints_isl.c math_support.c ddg.c trans
 libpluto_la_CPPFLAGS = -O3 -funroll-loops -fopenmp \
    -DSCOPLIB_INT_T_IS_LONGLONG -DCLOOG_INT_GMP \
    -I../include \
-   -I../piplib/include \
-   -I../clan/include \
-   -I../openscop/include \
-   -I../candl/include \
-   -I../cloog-isl/include \
+   $(PIPLIB_INCLUDE) \
+   $(CLAN_INCLUDE) \
+   $(OSL_INCLUDE) \
+   $(CANDL_INCLUDE) \
+   $(CLOOGISL_INCLUDE) \
    $(ISL_INCLUDE)
 
 # libpluto doesn't use polylib
 libpluto_la_LIBADD = \
-   ../piplib/libpiplib64.la \
-   ../openscop/libosl.la \
-   ../clan/libclan.la \
-   ../candl/libcandl.la \
+   $(PIPLIB_LIBADD) \
+   $(OSL_LIBADD) \
+   $(CLAN_LIBADD) \
+   $(CANDL_LIBADD) \
    $(ISL_LIBADD) \
    -lm -lgomp

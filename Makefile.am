@@ -17,8 +17,50 @@ ISL_INCLUDE += -I$(top_srcdir)/isl/include
 ISL_LIBADD += $(top_srcdir)/isl/libisl.la
 endif
 
+if EXTERNAL_PIPLIB
+MAY_PIPLIB =
+# PIPLIB_INCLUDE and PIPLIB_LIBADD were already defined
+else
+MAY_PIPLIB = piplib
+endif
 
-SUBDIRS = piplib polylib $(MAY_ISL) cloog-isl openscop clan candl src
+if EXTERNAL_POLYLIB
+MAY_POLYLIB =
+# POLYLIB_INCLUDE and POLYLIB_LIBADD were already defined
+else
+MAY_POLYLIB = polylib
+endif
+
+if EXTERNAL_OSL
+MAY_OSL =
+# OSL_INCLUDE and OSL_LIBADD were already defined
+else
+MAY_OSL = openscop
+endif
+
+if EXTERNAL_CLOOGISL
+MAY_CLOOGISL =
+# CLOOGISL_INCLUDE and CLOOGISL_LIBADD were already defined
+else
+MAY_CLOOGISL = cloog-isl
+endif
+
+if EXTERNAL_CLAN
+MAY_CLAN =
+# CLAN_INCLUDE and CLAN_LIBADD were already defined
+else
+MAY_CLAN = clan
+endif
+
+if EXTERNAL_CANDL
+MAY_CANDL =
+# CANDL_INCLUDE and CANDL_LIBADD were already defined
+else
+MAY_CANDL = candl
+endif
+
+
+SUBDIRS = $(MAY_PIPLIB) $(MAY_POLYLIB) $(MAY_ISL) $(MAY_OSL) $(MAY_CLOOGISL) $(MAY_CLAN) $(MAY_CANDL) src
 
 ACLOCAL_AMFLAGS = -I m4
 

@@ -97,6 +97,29 @@ if test "$poly_cv_gmpfatal" = "yes"; then
         fi
 
 
+
+
+AC_SUBST(PIPLIB_INCLUDE)
+AC_SUBST(PIPLIB_LDFLAGS)
+AC_SUBST(PIPLIB_LIBADD)
+
+dnl Provide --with-piplib-prefix
+AC_ARG_WITH(piplib-prefix,
+            AC_HELP_STRING([--with-piplib-prefix=DIR],
+              	             [DIR location where piplib is installed]),
+              [piplib_prefix=$withval;
+               PIPLIB_INCLUDE="-I$withval/include";
+               PIPLIB_LDFLAGS="-L$withval/lib";
+               PIPLIB_LIBADD="$withval/lib/libpiplib64.la";
+               external_piplib=true
+               ],
+              [PIPLIB_INCLUDE="-I../piplib/include";
+               PIPLIB_LDFLAGS="-L../piplib";
+               PIPLIB_LIBADD="../piplib/libpiplib64.la";
+               external_piplib=false])
+AM_CONDITIONAL(EXTERNAL_PIPLIB, test x$external_piplib = xtrue)
+
+if test x$external_piplib = xfalse; then
 dnl Configuring PipLib (long long int is 64 bits)
 echo -e "\n=========================="
 echo "Configuring PipLib"
@@ -106,8 +129,30 @@ configureopts="--with-bits=64 --prefix=$prefix"
  $RM config.cache;
  ./configure ${configureopts}
  )
+fi
 
 
+AC_SUBST(OSL_INCLUDE)
+AC_SUBST(OSL_LDFLAGS)
+AC_SUBST(OSL_LIBADD)
+
+dnl Provide --with-osl-prefix
+AC_ARG_WITH(osl-prefix,
+            AC_HELP_STRING([--with-osl-prefix=DIR],
+              	             [DIR location where osl is installed]),
+              [osl_prefix=$withval;
+               OSL_INCLUDE="-I$withval/include";
+               OSL_LDFLAGS="-L$withval/lib";
+               OSL_LIBADD="$withval/lib/libosl.la";
+               external_osl=true
+               ],
+              [OSL_INCLUDE="-I../openscop/include";
+               OSL_LDFLAGS="-L../openscop";
+               OSL_LIBADD="../openscop/libosl.la";
+               external_osl=false])
+AM_CONDITIONAL(EXTERNAL_OSL, test x$external_osl = xtrue)
+
+if test x$external_osl = xfalse; then
 dnl Configuring Openscop
 echo -e "\n=========================="
 echo "Configuring Openscop"
@@ -116,8 +161,30 @@ configureopts="--enable-llint-version --prefix=$prefix"
 (cd openscop/
  ./configure ${configureopts}
  )
+fi
 
 
+AC_SUBST(CLAN_INCLUDE)
+AC_SUBST(CLAN_LDFLAGS)
+AC_SUBST(CLAN_LIBADD)
+
+dnl Provide --with-clan-prefix
+AC_ARG_WITH(clan-prefix,
+            AC_HELP_STRING([--with-clan-prefix=DIR],
+              	             [DIR location where clan is installed]),
+              [clan_prefix=$withval;
+               CLAN_INCLUDE="-I$withval/include";
+               CLAN_LDFLAGS="-L$withval/lib";
+               CLAN_LIBADD="$withval/lib/libclan.la";
+               external_clan=true
+               ],
+              [CLAN_INCLUDE="-I../clan/include";
+               CLAN_LDFLAGS="-L../clan";
+               CLAN_LIBADD="../clan/libclan.la";
+               external_clan=false])
+AM_CONDITIONAL(EXTERNAL_CLAN, test x$external_clan = xtrue)
+
+if test x$external_clan = xfalse; then
 dnl Configuring Clan-osl
 echo -e "\n=========================="
 echo "Configuring Clan"
@@ -127,8 +194,30 @@ configureopts="--enable-llint-version --prefix=$prefix \
 (cd clan/
  ./configure ${configureopts}
  )
+fi
 
 
+AC_SUBST(CANDL_INCLUDE)
+AC_SUBST(CANDL_LDFLAGS)
+AC_SUBST(CANDL_LIBADD)
+
+dnl Provide --with-candl-prefix
+AC_ARG_WITH(candl-prefix,
+            AC_HELP_STRING([--with-candl-prefix=DIR],
+              	             [DIR location where candl is installed]),
+              [candl_prefix=$withval;
+               CANDL_INCLUDE="-I$withval/include";
+               CANDL_LDFLAGS="-L$withval/lib";
+               CANDL_LIBADD="$withval/lib/libcandl.la";
+               external_candl=true
+               ],
+              [CANDL_INCLUDE="-I../candl/include";
+               CANDL_LDFLAGS="-L../candl";
+               CANDL_LIBADD="../candl/libcandl.la";
+               external_candl=false])
+AM_CONDITIONAL(EXTERNAL_CANDL, test x$external_candl = xtrue)
+
+if test x$external_candl = xfalse; then
 dnl Configuring Candl-osl
 echo -e "\n=========================="
 echo "Configuring Candl"
@@ -139,8 +228,30 @@ configureopts="--enable-llint-version --prefix=$prefix \
 (cd candl/
  ./configure ${configureopts}
  )
+fi
 
 
+AC_SUBST(POLYLIB_INCLUDE)
+AC_SUBST(POLYLIB_LDFLAGS)
+AC_SUBST(POLYLIB_LIBADD)
+
+dnl Provide --with-polylib-prefix
+AC_ARG_WITH(polylib-prefix,
+            AC_HELP_STRING([--with-polylib-prefix=DIR],
+              	             [DIR location where polylib is installed]),
+              [polylib_prefix=$withval;
+               POLYLIB_INCLUDE="-I$withval/include";
+               POLYLIB_LDFLAGS="-L$withval/lib";
+               POLYLIB_LIBADD="$withval/lib/libpolylib64.la";
+               external_polylib=true
+               ],
+              [POLYLIB_INCLUDE="-I../polylib/include";
+               POLYLIB_LDFLAGS="-L../polylib";
+               POLYLIB_LIBADD="../polylib/libpolylib64.la";
+               external_polylib=false])
+AM_CONDITIONAL(EXTERNAL_POLYLIB, test x$external_polylib = xtrue)
+
+if test x$external_polylib = xfalse; then
 dnl Configuring polylib
 echo -e "\n======================"
 echo "Configuring polylib"
@@ -149,6 +260,7 @@ configureopts="--enable-longlongint-lib --prefix=$prefix"
 (cd polylib/
  ./configure ${configureopts}
 )
+fi
 
 
 AC_SUBST(ISL_INCLUDE)
@@ -180,6 +292,27 @@ configureopts="--with-gmp-prefix=$GMP_PREFIX --with-gmp-exec-prefix=$GMP_PREFIX 
 fi
 
 
+AC_SUBST(CLOOGISL_INCLUDE)
+AC_SUBST(CLOOGISL_LDFLAGS)
+AC_SUBST(CLOOGISL_LIBADD)
+
+dnl Provide --with-cloog-prefix
+AC_ARG_WITH(cloog-prefix,
+            AC_HELP_STRING([--with-cloog-prefix=DIR],
+              	             [DIR location where cloog is installed]),
+              [cloog_prefix=$withval;
+               CLOOGISL_INCLUDE="-I$withval/include";
+               CLOOGISL_LDFLAGS="-L$withval/lib";
+               CLOOGISL_LIBADD="$withval/lib/libcloog-isl.la";
+               external_cloogisl=true
+               ],
+              [CLOOGISL_INCLUDE="-I../cloog-isl/include";
+               CLOOGISL_LDFLAGS="-L../cloog-isl";
+               CLOOGISL_LIBADD="../cloog-isl/libcloog-isl.la";
+               external_cloogisl=false])
+AM_CONDITIONAL(EXTERNAL_CLOOGISL, test x$external_cloogisl = xtrue)
+
+if test x$external_cloogisl = xfalse; then
 dnl Configuring Cloog 0.14.1 (long long int)
 echo -e "\n=========================="
 echo "Configuring Cloog-isl"
@@ -194,6 +327,7 @@ fi
 (cd cloog-isl/
  ./configure ${configureopts}
  )
+fi
 
 AC_PATH_PROGS(BASH, bash)
 
