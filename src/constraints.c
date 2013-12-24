@@ -32,7 +32,8 @@
 #include "constraints.h"
 #include "pluto.h"
 
-#include "piplib/piplib64.h"
+//#include "piplib/piplib64.h"
+#include "piplib/piplibMP.h"
 
 #define UB 0
 #define LB 1
@@ -1028,7 +1029,11 @@ PipMatrix *pip_matrix_populate(int **cst, int nrows, int ncols)
     p = matrix->p_Init ;
     for (i=0;i<matrix->NbRows;i++)  {
         for (j=0;j<matrix->NbColumns;j++)   {
+#ifdef PIP_WIDTH_MP
+          mpz_set_si(p++, cst[i][j]);
+#else
             *(p++) = cst[i][j];
+#endif
         }
     }
     return matrix ;

@@ -35,7 +35,7 @@
 /* Candl/piplib_wrapper converts relation to matrices */
 #ifdef SCOPLIB_INT_T_IS_LONGLONG // Defined in src/Makefile.am
 #define PLUTO_OSL_PRECISION 64
-#elif  SCOPLIB_INT_T_IS_MP
+#elif  defined(SCOPLIB_INT_T_IS_MP)
 #define PLUTO_OSL_PRECISION 0
 #endif
 

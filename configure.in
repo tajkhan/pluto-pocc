@@ -110,12 +110,12 @@ AC_ARG_WITH(piplib-prefix,
               [piplib_prefix=$withval;
                PIPLIB_INCLUDE="-I$withval/include";
                PIPLIB_LDFLAGS="-L$withval/lib";
-               PIPLIB_LIBADD="$withval/lib/libpiplib64.la";
+               PIPLIB_LIBADD="$withval/lib/libpiplibMP.la";
                external_piplib=true
                ],
               [PIPLIB_INCLUDE="-I../piplib/include";
                PIPLIB_LDFLAGS="-L../piplib";
-               PIPLIB_LIBADD="../piplib/libpiplib64.la";
+               PIPLIB_LIBADD="../piplib/libpiplibMP.la";
                external_piplib=false])
 AM_CONDITIONAL(EXTERNAL_PIPLIB, test x$external_piplib = xtrue)
 
