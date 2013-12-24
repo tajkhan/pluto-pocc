@@ -2358,6 +2358,14 @@ void pluto_prog_free(PlutoProg *prog)
     free(prog->depcst);
     pluto_constraints_free(prog->globcst);
 
+    for (i=0; i<prog->num_data; i++)  {
+        free(prog->data_names[i]);
+    }
+    if (prog->num_data >= 1)    {
+        free(prog->data_names);
+    }
+
+
     free(prog);
 }
 

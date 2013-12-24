@@ -72,6 +72,9 @@ Ploop *pluto_loop_dup(Ploop *l)
 
 void pluto_loop_free(Ploop *loop)
 {
+    if(!loop)
+      return;
+
     if (loop->stmts != NULL) {
         free(loop->stmts);
     }
@@ -342,8 +345,12 @@ Ploop **pluto_get_dom_parallel_loops(const PlutoProg *prog, int *ndploops)
 {
     Ploop **loops, **tmp_loops, **dom_loops;
     int i, j, ndomloops, nploops;
+    int *loop_copied = NULL;
 
     loops = pluto_get_parallel_loops(prog, &nploops);
+    loop_copied = (int *)malloc(sizeof(int)*nploops);
+    for(i=0; i< nploops; i++)
+      loop_copied[i] = 0;
 
     dom_loops = NULL;
     ndomloops = 0;
@@ -353,12 +360,19 @@ Ploop **pluto_get_dom_parallel_loops(const PlutoProg *prog, int *ndploops)
         }
         if (j==nploops) {
             tmp_loops = pluto_loops_concat(dom_loops, ndomloops, &loops[i], 1);
+            loop_copied[i] = 1;
             free(dom_loops);
             dom_loops = tmp_loops;
             ndomloops++;
         }
     }
     *ndploops = ndomloops;
+
+    for(i=0; i< nploops; i++)
+      if(!loop_copied[i])
+        pluto_loop_free(loops[i]);
+    free(loops);
+    free(loop_copied);
 
     return dom_loops;
 }
@@ -649,6 +663,7 @@ Band **pluto_get_innermost_permutable_bands(PlutoProg *prog, int *ndbands)
     for (i=0; i<nbands; i++) {
         pluto_band_free(bands[i]);
     }
+    free(bands);
 
     // pluto_bands_print(dbands, *ndbands);
 

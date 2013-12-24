@@ -484,6 +484,7 @@ PlutoConstraints *get_permutability_constraints(Dep **deps, int ndeps,
         Dep *dep = deps[i];
 
         if (options->rar == 0 && IS_RAR(dep->type))  {
+            pluto_constraints_free(depcst[i]);
             continue;
         }
 
@@ -491,7 +492,7 @@ PlutoConstraints *get_permutability_constraints(Dep **deps, int ndeps,
          * pluto_auto_transform) only after all possible independent solutions 
          * are found to the formulation
          */ 
-        if (dep_is_satisfied(dep)) continue;
+        if (dep_is_satisfied(dep)) {pluto_constraints_free(depcst[i]);continue;}
 
         FILE *fp = fopen("skipdeps.txt", "r");
 
@@ -509,12 +510,14 @@ PlutoConstraints *get_permutability_constraints(Dep **deps, int ndeps,
             fclose(fp);
             if (found)  {
                 printf("Skipping dep %d\n", num);
+                pluto_constraints_free(depcst[i]);
                 continue;
             }
         }
 
         /* Subsequent calls can just use the old ones */
         pluto_constraints_add(globcst, depcst[i]);
+        pluto_constraints_free(depcst[i]);
 
         IF_DEBUG(fprintf(stdout, "After dep: %d; num_constraints: %d\n", i+1, globcst->nrows));
         if (globcst->nrows >= 0.7*MAX_CONSTRAINTS)  {
@@ -528,6 +531,8 @@ PlutoConstraints *get_permutability_constraints(Dep **deps, int ndeps,
 
     IF_DEBUG(fprintf(stdout, "After all dependences: num constraints: %d, \
 num variables: %d\n", globcst->nrows, globcst->ncols-1));
+
+    free(depcst);
 
     return globcst;
 }

@@ -370,6 +370,7 @@ int *pluto_prog_constraints_solve(PlutoConstraints *cst, PlutoProg *prog)
     }
 
     pluto_matrix_free(perm_mat);
+    pluto_matrix_free(newcstmat);
     pluto_constraints_free(newcst);
 
     return fsol;
