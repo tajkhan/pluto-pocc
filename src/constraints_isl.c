@@ -14,6 +14,7 @@
 #include "constraints.h"
 #include "pluto.h"
 
+#include "isl/int.h"
 #include "isl/map.h"
 #include "isl/set.h"
 

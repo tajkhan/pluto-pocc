@@ -52,6 +52,7 @@
 #include "candl/options.h"
 #include "candl/dependence.h"
 
+#include <isl/int.h>
 #include <isl/map.h>
 #include <isl/mat.h>
 #include <isl/set.h>

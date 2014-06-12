@@ -29,6 +29,7 @@
 #include "pluto.h"
 #include "program.h"
 
+#include <isl/int.h>
 #include <isl/constraint.h>
 #include <isl/mat.h>
 #include <isl/set.h>
